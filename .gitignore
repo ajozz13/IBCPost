@@ -1,3 +1,4 @@
 *.jar
 dist/*
 docs/*
+build/*
