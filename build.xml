@@ -1,0 +1,100 @@
+﻿<?xml version="1.0"?>
+
+<project name="post" default="compile" basedir=".">
+        <property name="Name" value="IBCPost" />
+        <property name="packages" value="com.ibcinc.sample" />
+        <property name="install.dir"   value="dist" />
+        <property name="project-main" value="post"/>
+        
+        <property name="src.dir"       value="src" />
+        <property name="lib.dir"       value="lib" />
+        <property name="docs.dir"      value="docs" />               
+        <property name="javadocs.dir"  value="${docs.dir}/api" />       
+        <property name="build.dir"     value="build" />
+        <property name="build.classes" value="${build.dir}/classes" />
+
+        <path id="classpath">
+                <fileset dir="${lib.dir}"    includes="**/*.jar"/>
+        </path>
+        <property name="classpath" value="${toString:classpath}"/>
+
+<!-- =================================================================== -->
+<!-- Initialize ant.                                                     -->
+<!-- =================================================================== -->
+
+        <target name="init">
+                <tstamp/>
+                <echo>Java Version via Ant: ${ant.java.version}</echo>
+                <echo>Java Version System Prop: ${java.version}</echo>
+                <echo>Home directory: ${env.HOME}</echo>
+        </target>
+
+<!-- =================================================================== -->
+<!-- Compile the source code.                                            -->
+<!-- =================================================================== -->
+
+        <target name="compile" depends="init">
+                <mkdir dir="${build.dir}"/>
+                <mkdir dir="${build.classes}"/>
+                <!-- <echo message="javac classpath = ${classpath}"/> -->
+                <javac srcdir="${src.dir}" destdir="${build.classes}" classpath="${classpath}" debug="off" deprecation="on" optimize="on">
+                        <include name="**/*.java"/>
+                </javac>
+        </target>
+
+<!-- =================================================================== -->
+<!-- Create the JAR archive.                                             -->
+<!-- =================================================================== -->
+
+        <target name="jar" depends="compile">
+                <jar jarfile="${Name}.jar" basedir="${build.classes}" includes="com/**">
+	                <manifest>
+		                <attribute name="Built-By" value="IBC Inc. Development Team" />
+		                <attribute name="Main-Class" value="${packages}.${project-main}" />
+                                <attribute name="Class-Path" value="${project-cp}" />
+	                </manifest>
+                 </jar>
+        </target>
+
+<!-- =================================================================== -->
+<!-- Generate the APIc documentation.                                    -->
+<!-- =================================================================== -->
+
+        <target name="javadocs" depends="init">
+                <mkdir dir="${javadocs.dir}"/>
+                <javadoc packagenames="${packages}" sourcepath="${src.dir}" destdir="${javadocs.dir}" classpath="${classpath}" author="true" version="true" windowtitle="${Name} API" doctitle="${Name}" bottom="Copyright © 1999 - 2014 International Bonded Couriers Inc.  All Rights Reserved."/>
+        </target>
+
+<!-- =================================================================== -->
+<!-- Create the distribution                                             -->
+<!-- =================================================================== -->
+
+        <target name="dist" depends="install" />
+
+<!-- =================================================================== -->
+<!-- Clean up generated stuff                                            -->
+<!-- =================================================================== -->
+
+        <target name="clean">
+                <delete dir="${build.dir}"/>
+                <delete dir="${docs.dir}"/>
+                <delete dir="${install.dir}"/>
+                <delete file="${Name}.jar"/>
+        </target>
+
+<!-- =================================================================== -->
+<!-- Install the project                                                 -->
+<!-- =================================================================== -->
+
+        <target name="install" depends="compile,jar">
+                <mkdir dir="${install.dir}"/>
+                <copy file="${Name}.jar" todir="${install.dir}"/>
+                <copy todir="${install.dir}">
+                        <fileset dir="${lib.dir}">
+                                <include name="*.jar"/> 
+                        </fileset>
+                </copy>
+                <copy file="scripts/run.sh" todir="${install.dir}"/>
+                <copy file="scripts/run.bat" todir="${install.dir}"/>
+        </target>
+</project>
