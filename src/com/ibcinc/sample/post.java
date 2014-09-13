@@ -12,7 +12,7 @@ public class post{
                 int exit_code = 0;
 		try{
 			if( args.length < 1 ){
-				throw new Exception( "Usage: java -jar post.jar file_with_json_structure [-d]" );	
+				throw new Exception( "Usage: java -jar IBCPost.jar file_with_json_structure [-d]" );	
 			}else{
                                 //** If you need to setup your proxy specify below
                                 //System.setProperty( "http.proxyHost", "proxy.ibcinc.com" );
