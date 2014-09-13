@@ -26,7 +26,7 @@ There is also an optional CURL script post sample script in the scripts director
 
 To Compile
 ----------
-Use the ant build script: ant install [clean|compile]
+Use the ant build script: ant install [clean|compile].
 This command creates a distribution directory (dist) with a copy of the Jar and a run shell script.
 For questions or inquiries please email us directly at it@ibcinc.com.
 
