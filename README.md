@@ -9,7 +9,7 @@ The REST api URL is: https://api.pactrak.com/manifest/aams.
 
 The project will read the contents of the file and submit them via HTTP post to the IBC Rest API.
 For more information on the creation of the required JSON structure, please visit the
-IBC REST API documentation https://api.pactrak.com/manifest/aams.
+IBC REST API documentation page https://api.pactrak.com/manifest/aams.
 
 Requirements
 ------------
@@ -21,6 +21,8 @@ java -jar post.jar file_with_json_structure [-d]
 or
 use the run scripts that are in the distribution sample.
 Note: If you need the set the HTTP proxy, you may modify the run scripts or set the proxy parameters in post.java source file.
+
+There is also an optional CURL script post sample script in the scripts directory.
 
 To Compile
 ----------
