@@ -54,8 +54,15 @@ public class sender {
                 output.flush();
                 
                 System.out.println( String.format( "Response code = %d", connection.getResponseCode() ) );
+                
+                InputStream is = null;
+                try{
+                        is = connection.getInputStream();
+                }catch( Exception e ){
+                        is = connection.getErrorStream();
+                }
 
-                BufferedReader reader = new BufferedReader( new InputStreamReader( connection.getInputStream() ) );
+                BufferedReader reader = new BufferedReader( new InputStreamReader( is ) );
                 String response;
                 System.out.println( "------------------------------" );
                 System.out.println( "Server Response:" );
